@@ -242,9 +242,9 @@ curl -X GET "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/r
 
 ## Ferramentas Recomendadas para Automação (Plus)
 
-1. **Cypress**: Para testes end-to-end da interface web
+1. **Playwright Test**: Para testes end-to-end da interface web com relatórios HTML integrados
    - Advantage: Instalação fácil, tempo de espera automático, debugging intuitivo
-   - Exemplo de teste Cypress em BDD:
+   - Exemplo de teste Playwright em BDD:
 
 ```javascript
 // cypress/integration/reservas.cy.js
@@ -323,4 +323,4 @@ Os 4 cenários cobrem fluxos críticos do sistema de reservas:
 
 Todos os cenários seguem padrão BDD (Given/When/Then) facilitando a leitura por stakeholders e a criação de automação. Os dados de teste (cartão 4000 0000 0000 0044) foram escolhidos seguindo padrão de testes (valida Luhn, início 4000 comum em testes de gateway de pagamento).
 
-Para execução manual, seguir o passo a passo detalhado. Para automação, recomenda-se Cypress para testes E2E ou Postman/Newman para testes de API, ambos com relatórios completos e integração com pipelines CI/CD.
+Para execução manual, seguir o passo a passo detalhado. Para automação, recomenda-se **Playwright Test** para testes E2E ou Postman/Newman para testes de API, ambos com relatórios completos e integração com pipelines CI/CD.

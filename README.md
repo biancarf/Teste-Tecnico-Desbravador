@@ -48,7 +48,7 @@ newman run reservas_collection.json --reporters cli,html
 
 ### 4. Automação Recomendada
 
-- **Cypress**: testes end-to-end da interface web
+- **Playwright Test**: testes end-to-end da interface web com relatórios HTML
 - **Postman / Newman**: testes de API
 - **Playwright**: alternativa multiplataforma
 
