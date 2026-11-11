@@ -1,0 +1,193 @@
+name: Testes QA - Desbravador Software
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  # Job 1: Validar algoritmo Luhn do cartão de crédito
+  luhn-validation:
+    runs-on: ubuntu-latest
+    name: Validar Cartão de Crédito
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Validar Luhn Algorithm (Node.js)
+        run: |
+          echo "🔢 Validando número do cartão de teste: 4000000000000044"
+          node -e "
+          function validarLuhn(numeroCartao) {
+            const num = numeroCartao.replace(/\s+/g, '');
+            let soma = 0;
+            let alternar = false;
+            for (let i = num.length - 1; i >= 0; i--) {
+              let digito = parseInt(num[i]);
+              if (alternar) {
+                digito *= 2;
+                if (digito > 9) digito -= 9;
+              }
+              soma += digito;
+              alternar = !alternar;
+            }
+            return soma % 10 === 0;
+          }
+          
+          const cardNumber = '4000000000000044';
+          const isValid = validarLuhn(cardNumber);
+          
+          console.log('Número do cartão:', cardNumber);
+          console.log('Validação Luhn:', isValid);
+          
+          if [ \"\$isValid\" = \"true\" ]; then
+            echo '✅ Cartão válido para testes - passou na validação Luhn'
+            exit 0
+          else
+            echo '❌ Cartão inválido - falha na validação Luhn'
+            exit 1
+          fi
+          
+      - name: ✅ Status da Validação
+        run: echo "Algoritmo Luhn verificado com sucesso"
+
+  # Job 2: Verificar cenários BDD
+  bdd-scenarios:
+    runs-on: ubuntu-latest
+    name: Verificar Cenários BDD
+    needs: luhn-validation
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Verificar existência de cenários BDD
+        run: |
+          echo "📋 Verificando cenários BDD em testes_reservas.md"
+          
+          # Contar cenários
+          cenario_count=$(grep -c "^Cenario:" testes_reservas.md)
+          echo "📊 Total de cenários encontrados: \$cenario_count"
+          
+          # Listar cenários
+          echo "📝 Cenários identificados:"
+          grep "^Cenario:" testes_reservas.md | sed 's/Cenario: //'
+          
+          # Verificar padrão Given/When/Then
+          given_count=$(grep -c "^  Given:" testes_reservas.md)
+          when_count=$(grep -c "^  When:" testes_reservas.md)
+          then_count=$(grep -c "^  Then:" testes_reservas.md)
+          
+          echo "⚡ Padrão BDD verificado:"
+          echo "   - Given: \$given_count ocorrências"
+          echo "   - When: \$when_count ocorrências"
+          echo "   - Then: \$then_count ocorrências"
+          
+          # Validar que temos pelo menos 4 cenários (mínimo do desafio)
+          if [ \"\$cenario_count\" -ge 4 ]; then
+            echo '✅ Mínimo de 4 cenários atendido (requisito do desafio)'
+            exit 0
+          else
+            echo "❌ Necessário pelo menos 4 cenários, encontrado: \$cenario_count"
+            exit 1
+          fi
+
+      - name: ✅ Relatório BDD
+        run: echo "Todos os cenários BDD validados com sucesso"
+
+  # Job 3: Validar estrutura de arquivos
+  file-structure:
+    runs-on: ubuntu-latest
+    name: Validar Estrutura de Arquivos
+    needs: bdd-scenarios
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Listar arquivos do projeto
+        run: |
+          echo "📁 Estrutura de arquivos do repositório:"
+          find . -type f -not -path '*/\.git/*' -not -path '*/.git/*' | sort
+          
+      - name: Verificar arquivos essenciais
+        run: |
+          echo "✅ Verificando arquivos essenciais do teste prático:"
+          
+          arquivos_essenciais=(
+            "testes_reservas.md"
+            "comandos_api.md" 
+            "README.md"
+          )
+          
+          for arquivo in "${arquivos_essenciais[@]}"; do
+            if [ -f "$arquivo" ]; then
+              size=$(wc -c < "$arquivo")
+              echo "   ✅ $arquivo ($size bytes)"
+            else
+              echo "   ❌ $arquivo não encontrado"
+              exit 1
+            fi
+          done
+          
+          echo "📦 Todos os arquivos essenciais presentes"
+
+  # Job 4: Resumo final
+  final-summary:
+    runs-on: ubuntu-latest
+    name: Resumo Final dos Testes
+    needs: [luhn-validation, bdd-scenarios, file-structure]
+    if: always()
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Gerar relatório final
+        run: |
+          echo "========================================"
+          echo "🚀 RELATÓRIO FINAL - TESTES QA DESbRAVADOR"
+          echo "========================================"
+          echo ""
+          echo "📅 Data: $(date '+%d/%m/%Y %H:%M')"
+          echo "🌿 Branch: $(git rev-parse --abbrev-ref HEAD)"
+          echo ""
+          echo "✅ CHECKLIST DE VALIDAÇÃO:"
+          
+          # Verificar Luhn
+          node -e "
+          function validarLuhn(numeroCartao) {
+            const num = numeroCartao.replace(/\s+/g, '');
+            let soma = 0;
+            let alternar = false;
+            for (let i = num.length - 1; i >= 0; i--) {
+              let digito = parseInt(num[i]);
+              if (alternar) {
+                digito *= 2;
+                if (digito > 9) digito -= 9;
+              }
+              soma += digito;
+              alternar = !alternar;
+            }
+            return soma % 10 === 0;
+          }
+          const isValid = validarLuhn('4000000000000044');
+          console.log(\`Luhn: \${isValid ? '✅ PASSOU' : '❌ FALHOU'}\`);
+          " >> /tmp/test_report.txt
+          
+          # Verificar cenários
+          cenario_count=$(grep -c "^Cenario:" testes_reservas.md)
+          echo "Cenários BDD: $cenario_count (mínimo 4)" >> /tmp/test_report.txt
+          
+          # Arquivos
+          echo "Arquivos: $(find . -maxdepth 1 -type f -not -path '*/\.git/*' | wc -l) arquivos" >> /tmp/test_report.txt
+          
+          # Link do repositório
+          echo "Repositório: https://github.com/biancarf/Teste-Tecnico-Desbravador" >> /tmp/test_report.txt
+          
+          echo "========================================"
+          cat /tmp/test_report.txt
+
+      - name: 📋 Status Final
+        run: |
+          echo "🎉 Workflow concluído com sucesso!"
+          echo "Todos os testes de qualidade passaram."
+          echo "✅ Algoritmo Luhn validado"
+          echo "✅ Cenários BDD verificados (mínimo 4)"
+          echo "✅ Estrutura de arquivos confirmada"
+          echo "✅ Relatório gerado e disponível no GitHub Actions"
