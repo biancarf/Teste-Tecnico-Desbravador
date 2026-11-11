@@ -1,6 +1,6 @@
 # Teste Prático Analista de QA - Desbravador Software
 
-## Desafio Concluído
+## Desafio realizado
 
 Este repositório contém a implementação completa do teste prático para a posição de Analista de QA Desbravador Software.
 
