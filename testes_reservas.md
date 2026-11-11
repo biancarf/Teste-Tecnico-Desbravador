@@ -132,7 +132,7 @@ Evidência: Reserva confirmada com número de protocolo
 ## Documentação dos Resultados dos Testes
 
 ### Resultado Esperado (Sucesso)
-- [ ] Página de login carregada com sucesso
+- [ ] Acesso direto ao sistema (sem login obrigatório)
 - [ ] Disponibilidade consultada para 3 dias
 - [ ] Quarto STANDARD ST1 selecionado
 - [ ] 02 adultos + 01 criança cadastrados
@@ -249,10 +249,10 @@ curl -X GET "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/r
 // cypress/integration/reservas.cy.js
 describe('Testes de Reserva - Desbravador Software', () => {
   it('CT01 - Deveria verificar disponibilidade e criar reserva', () => {
-    // Acessar login
+    // Acessar sistema (acesso direto - sem login necessário)
     cy.visit('https://reservas.desbravador.com.br/hotel-app/desbravador-4-5');
     
-    // Login (credenciais de teste)
+    // NOTE: Login é opcional para funcionalidades de visualização e reserva
     cy.get('#usuario').type('usuario_teste');
     cy.get('#senha').type('senha_teste{enter}');
     
