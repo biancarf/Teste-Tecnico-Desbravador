@@ -75,14 +75,15 @@ Cenario: Efetuar pagamento com cartão de crédito especificado
 ### Passo 1: Acessar o sistema
 ```
 URL: https://reservas.desbravador.com.br/hotel-app/desbravador-4-5
-Ação: Abertura da página de login
-Evidência: Página carregada com formulário de login (campos: e-mail/usuário, senha, QR code de acesso)
+Ação: Acessar página inicial (acesso direto - sem login obrigatório)
+Evidência: Página carregada com interface de reservas (acesso direto - sem login para visualização)
 ```
 
-### Passo 2: Login no sistema
+### Passo 2: (Opcional) Acesso ao sistema
 ```
-Ação: Preencher credenciais de acesso (serão necessárias credenciais de teste)
-Evidência: Acesso ao dashboard/sistema de reservas
+Ação: (Opcional) Preencher credenciais de acesso (caso necessite de edição completa)
+Evidência: Acesso ao dashboard completo (apenas se credenciais fornecidas)
+Observação: Todos os testes CT01-CT04 podem ser realizados sem login prévio na etapa inicial
 ```
 
 ### Passo 3: Verificar disponibilidade de reserva
