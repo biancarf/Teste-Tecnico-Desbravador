@@ -27,7 +27,7 @@ console.log(validarLuhn('4000000000000042')); // false - cartão inválido
 
 ## 2. Consultar Disponibilidade de Reserva (GET API)
 ```
-curl -X GET "https://reservas.desbravador.com.br/1111/api/availability" \
+curl -X GET "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/availability" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" \
   -H "Content-Type: application/json" \
   -d '{
@@ -43,7 +43,7 @@ curl -X GET "https://reservas.desbravador.com.br/1111/api/availability" \
 
 ## 3. Criar Nova Reserva (POST API)
 ```
-curl -X POST "https://reservas.desbravador.com.br/1111/api/reservas" \
+curl -X POST "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/reservas" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" \
   -H "Content-Type: application/json" \
   -d '{
@@ -66,7 +66,7 @@ curl -X POST "https://reservas.desbravador.com.br/1111/api/reservas" \
 
 ## 4. Validar Dados de Hóspedes (POST API)
 ```
-curl -X POST "https://reservas.desbravador.com.br/1111/api/validar-hospedes" \
+curl -X POST "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/validar-hospedes" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" \
   -H "Content-Type: application/json" \
   -d '{
@@ -81,7 +81,7 @@ curl -X POST "https://reservas.desbravador.com.br/1111/api/validar-hospedes" \
 
 ## 5. Consultar Status da Reserva (GET API)
 ```
-curl -X GET "https://reservas.desbravador.com.br/1111/api/reservas/{id_reserva}" \
+curl -X GET "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/reservas/{id_reserva}" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" \
   -H "Content-Type: application/json"
 ```
@@ -102,10 +102,10 @@ newman run reservas_collection.json --reporters html --reporter-html-export ./re
 ## 7. Verificar Endpoints Disponíveis
 ```
 # Listar rotas da API (se houver endpoint de documentação)
-curl -X GET "https://reservas.desbravador.com.br/1111/api-docs" \
+curl -X GET "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api-docs" \
   -H "Authorization: Bearer <token>"
 
 # Ou verificar OpenAPI/Swagger
-curl -X GET "https://reservas.desbravador.com.br/1111/openapi.json" \
+curl -X GET "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/openapi.json" \
   -H "Authorization: Bearer <token>"
 ```

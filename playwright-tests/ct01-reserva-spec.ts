@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE_URL = 'https://reservas.desbravador.com.br';
+const BASE_URL = 'https://reservas.desbravador.com.br/hotel-app/desbravador-4-5';
 const CARD_NUMBER = '4000000000000044';
 const CARD_HOLDER = 'DESBRAVADOR SOFTWARE';
 const CARD_EXPIRY = '12/23';
@@ -10,7 +10,7 @@ test.describe('Testes de Reserva - Desbravador Software', () => {
 
   test('CT01 - Deveria verificar disponibilidade e criar reserva', async ({ page }) => {
     // Acessar login
-    await page.goto(`${BASE_URL}/1111`);
+    await page.goto(`${BASE_URL}`);
     
     // TODO: Descomentar e usar credenciais de teste reais quando disponíveis
     // await page.fill('#usuario', 'usuario_teste');

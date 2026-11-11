@@ -6,7 +6,7 @@
 ```gherkin
 Cenario: Verificar disponibilidade de reserva para dias úteis
   Dado que o usuário está logado no sistema Reservas Online
-  Quando o usuário acessa a página de reservas https://reservas.desbravador.com.br/1111
+  Quando o usuário acessa a página de reservas https://reservas.desbravador.com.br/hotel-app/desbravador-4-5
   Então o sistema deve exibir o calendário de disponibilidade
   E o usuário deve poder selecionar datas futuras
   Quando o usuário seleciona um período de 3 dias consecutivos
@@ -74,7 +74,7 @@ Cenario: Efetuar pagamento com cartão de crédito especificado
 
 ### Passo 1: Acessar o sistema
 ```
-URL: https://reservas.desbravador.com.br/1111
+URL: https://reservas.desbravador.com.br/hotel-app/desbravador-4-5
 Ação: Abertura da página de login
 Evidência: Página carregada com formulário de login (campos: e-mail/usuário, senha, QR code de acesso)
 ```
@@ -154,7 +154,7 @@ Caso seja necessário testar endpoints da API do sistema:
 ### 1. Verificar disponibilidade de reserva (GET)
 ```bash
 # Consultar disponibilidade de quartos
-curl -X GET "https://reservas.desbravador.com.br/1111/api/availability \
+curl -X GET "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/availability \
   -H "Authorization: Bearer <token_de_acesso>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -170,7 +170,7 @@ curl -X GET "https://reservas.desbravador.com.br/1111/api/availability \
 ### 2. Criar nova reserva (POST)
 ```bash
 # Efetuar reserva através da API
-curl -X POST "https://reservas.desbravador.com.br/1111/api/reservas" \
+curl -X POST "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/reservas" \
   -H "Authorization: Bearer <token_de_acesso>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -219,7 +219,7 @@ console.log(validarLuhn('4000000000000042')); // Deve retornar: false
 ### 4. Testar validação de dados de hóspede (GET/POST)
 ```bash
 # Validar se campos de hóspede estão completos
-curl -X POST "https://reservas.desbravador.com.br/1111/api/validar-hospedes" \
+curl -X POST "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/validar-hospedes" \
   -H "Authorization: Bearer <token_de_acesso>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -234,7 +234,7 @@ curl -X POST "https://reservas.desbravador.com.br/1111/api/validar-hospedes" \
 ### 5. Obter status da reserva (GET)
 ```bash
 # Consultar status da reserva criada
-curl -X GET "https://reservas.desbravador.com.br/1111/api/reservas/{id_reserva}" \
+curl -X GET "https://reservas.desbravador.com.br/hotel-app/desbravador-4-5/api/reservas/{id_reserva}" \
   -H "Authorization: Bearer <token_de_acesso>" \
   -H "Content-Type: application/json"
 ```
@@ -250,7 +250,7 @@ curl -X GET "https://reservas.desbravador.com.br/1111/api/reservas/{id_reserva}"
 describe('Testes de Reserva - Desbravador Software', () => {
   it('CT01 - Deveria verificar disponibilidade e criar reserva', () => {
     // Acessar login
-    cy.visit('https://reservas.desbravador.com.br/1111');
+    cy.visit('https://reservas.desbravador.com.br/hotel-app/desbravador-4-5');
     
     // Login (credenciais de teste)
     cy.get('#usuario').type('usuario_teste');
